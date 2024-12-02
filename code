@@ -43,7 +43,7 @@ public class Path {
 	public void permute(int number, int row, int col) {
 		
 		
-		
+		visited[row][col]=true;
 		if (visited[row][col-1]&&visited[row][col+1]&&!visited[row-1][col]&&!visited[row+1][col])
 		{
 			
@@ -67,7 +67,7 @@ public class Path {
 		return;
 
 		 
-		visited[row][col]=true;
+		
 
 		
 		if (s.charAt(number)!='*') 
