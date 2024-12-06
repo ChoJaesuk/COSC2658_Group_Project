@@ -1,6 +1,3 @@
-package test;
-
-
 public class Path {
 	static int count=0;
 	
@@ -11,21 +8,28 @@ public class Path {
 	int [][] moves= {{-1,0,1,0},{0,1,0,-1}};
 	int[] path = new int[size*size-1];    
 	String s="*****DR******R******R********************R*D************L******"  ; 
-	public void start()
-	{
-		
 
-		
-		for (int i = 0; i < size+2; i++) {
-			visited[0][i]=true;
-			visited[size+1][i]=true;
-			visited[i][0]=true;
-			visited[i][size+1]=true;
-			
+	
+	public void start() {
+		// 입력 문자열 유효성 검증
+		if (!validateInput(s)) {
+			System.out.println("Invalid input string! Ensure it is 63 characters long and contains only L, U, R, D, or *.");
+			return; // 유효하지 않은 경우 탐색 중단
 		}
+	
+		// 경계 설정
+		for (int i = 0; i < size + 2; i++) {
+			visited[0][i] = true;
+			visited[size + 1][i] = true;
+			visited[i][0] = true;
+			visited[i][size + 1] = true;
+		}
+	
+		// 탐색 시작
 		permute(0, 1, 1);
 		System.out.println(count);
 	}
+	
 	public static void main(String[] args) {
 		
 		Path path= new Path();
@@ -152,5 +156,19 @@ public class Path {
 		
 	
 	}
+
+public boolean validateInput(String s) {
+    // 문자열 길이가 63자가 아닌 경우
+    if (s.length() != 63) return false;
+
+    // 허용된 문자가 아닌 경우
+    for (char c : s.toCharArray()) {
+        if ("LURD*".indexOf(c) == -1) return false;
+    }
+
+    return true; // 유효한 문자열인 경우
+}
+
+	
 }
 
