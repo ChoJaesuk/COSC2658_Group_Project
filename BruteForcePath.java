@@ -2,11 +2,10 @@ package test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class BruteForcePath {
-    private static final int GRID_SIZE = 6;
-    private static int totalPaths = 0;
+    private static final int GRID_SIZE = 7; // 격자 크기
+    private static int totalPaths = 0; // 가능한 경로 개수
 
     public static void main(String[] args) {
         boolean[][] visited = new boolean[GRID_SIZE][GRID_SIZE];
@@ -21,17 +20,15 @@ public class BruteForcePath {
     }
 
     private static void generatePaths(int row, int col, boolean[][] visited, ArrayList<Character> path, ArrayList<Character> directions) {
-        // Mark current cell as visited
+        // 현재 위치를 방문 처리
         visited[row][col] = true;
-        path.add('X'); // Placeholder for current position
+        path.add('X'); // 현재 위치를 임시로 경로에 추가
 
-        // If path length matches required size, count as valid
+        // 모든 칸을 방문한 경우
         if (path.size() == GRID_SIZE * GRID_SIZE) {
             totalPaths++;
         } else {
-            // Shuffle directions to simulate brute force randomness
-            Collections.shuffle(directions);
-
+            // 고정된 순서로 모든 방향 탐색
             for (char dir : directions) {
                 int newRow = row;
                 int newCol = col;
@@ -51,18 +48,20 @@ public class BruteForcePath {
                         break;
                 }
 
+                // 새로운 위치가 유효한 경우
                 if (isSafe(newRow, newCol, visited)) {
                     generatePaths(newRow, newCol, visited, path, directions);
                 }
             }
         }
 
-        // Backtrack
+        // 백트래킹 (상태 복구)
         path.remove(path.size() - 1);
         visited[row][col] = false;
     }
 
     private static boolean isSafe(int row, int col, boolean[][] visited) {
+        // 위치가 격자 안에 있고 아직 방문하지 않은 경우만 true 반환
         return row >= 0 && col >= 0 && row < GRID_SIZE && col < GRID_SIZE && !visited[row][col];
     }
 }
