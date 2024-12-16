@@ -2,15 +2,15 @@ import java.util.Scanner;
 
 public class Algorithm { // 클래스 이름 변경: Path → Algorithm
     static int count = 0;
-    
+
     int size = 8;
     static int count1 = 0;
     boolean[][] visited = new boolean[size + 2][size + 2];
-    
-    int[][] moves = {{-1, 0, 1, 0}, {0, 1, 0, -1}};
+
+    int[][] moves = { { -1, 0, 1, 0 }, { 0, 1, 0, -1 } };
     int[] path = new int[size * size - 1];
     String s = "***************************************************************";
-    
+
     public void start() {
         System.out.println("Calculating..."); // Added to indicate the computation has started
         for (int i = 0; i < size + 2; i++) {
@@ -22,18 +22,22 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
         permute(0, 1, 1);
         System.out.println("Calculation complete"); // Added to indicate the computation has finished
     }
-    
+
     public static void main(String[] args) {
         Algorithm path = new Algorithm(); // 객체 이름 변경: Path → Algorithm
-        
+
         Scanner scanner = new Scanner(System.in);
         String userInput;
         boolean isValid = false;
 
         // Placeholder string to guide the user
-        System.out.println("Edit the following string (63 characters):");
+        System.out.println("Please provide a string of exactly 63 characters.");
+        System.out.println("The string should contain directions using the characters:");
+        System.out.println("  - 'R' for Right, 'L' for Left, 'U' for Up, 'D' for Down.");
+        System.out.println("  - Use '*' for unrestricted movement.");
+        System.out.println("For example, you can copy and use the following sample string:");
         System.out.println(path.s);
-        System.out.println("Use *, R, L, U, D only.");
+        System.out.println("Ensure your input follows this format exactly.");
 
         // Input validation loop
         while (!isValid) {
@@ -49,7 +53,8 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
 
                 // Check for length issues
                 if (!lengthValid) {
-                    System.out.println("  - Input must be exactly 63 characters. Your input length is " + userInput.length() + ".");
+                    System.out.println("  - Input must be exactly 63 characters. Your input length is "
+                            + userInput.length() + ".");
                 }
 
                 // Check for invalid characters
@@ -58,7 +63,8 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
                     for (int i = 0; i < userInput.length(); i++) {
                         char c = userInput.charAt(i);
                         if ("*RLUD".indexOf(c) == -1) {
-                            System.out.println("    * Invalid character found: '" + c + "' at position " + (i + 1) + ".");
+                            System.out
+                                    .println("    * Invalid character found: '" + c + "' at position " + (i + 1) + ".");
                         }
                     }
                 }
@@ -75,32 +81,32 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
         System.out.println("Number of paths: " + count); // Enhanced to provide better feedback
         System.out.println("Time (ms): " + (endTime - startTime)); // Enhanced for better clarity
     }
-    
+
     public void permute(int number, int row, int col) {
         if (visited[row][col - 1] && visited[row][col + 1] && !visited[row - 1][col] && !visited[row + 1][col]) {
             return;
         }
-        
+
         if (visited[row - 1][col] && visited[row + 1][col] && !visited[row][col - 1] && !visited[row][col + 1]) {
             return;
         }
-        
+
         if (row == size && col == 1) {
             if (number == size * size - 1) // 63
                 count++;
             return;
         }
-        
+
         if (number == size * size - 1)
             return;
-        
+
         visited[row][col] = true;
-        
+
         if (s.charAt(number) != '*') {
             if (s.charAt(number) == 'R') {
                 int newrow = row;
                 int newcol = col + 1;
-                
+
                 if (!visited[newrow][newcol]) {
                     permute(number + 1, newrow, newcol);
                 }
@@ -108,7 +114,7 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
             if (s.charAt(number) == 'L') {
                 int newrow = row;
                 int newcol = col - 1;
-                
+
                 if (!visited[newrow][newcol]) {
                     permute(number + 1, newrow, newcol);
                 }
@@ -116,7 +122,7 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
             if (s.charAt(number) == 'U') {
                 int newrow = row - 1;
                 int newcol = col;
-                
+
                 if (!visited[newrow][newcol]) {
                     permute(number + 1, newrow, newcol);
                 }
@@ -124,17 +130,19 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
             if (s.charAt(number) == 'D') {
                 int newrow = row + 1;
                 int newcol = col;
-                
+
                 if (!visited[newrow][newcol]) {
                     permute(number + 1, newrow, newcol);
                 }
             }
         } else {
-            if ((col > 2) && visited[row][col - 2] && (visited[row - 1][col - 1] || visited[row + 1][col - 1]) && !visited[row][col - 1]) {
+            if ((col > 2) && visited[row][col - 2] && (visited[row - 1][col - 1] || visited[row + 1][col - 1])
+                    && !visited[row][col - 1]) {
                 int newrow = row;
                 int newcol = col - 1;
                 permute(number + 1, newrow, newcol);
-            } else if (col < 6 && visited[row][col + 2] && (visited[row - 1][col + 1] || visited[row + 1][col + 1]) && !visited[row][col + 1]) {
+            } else if (col < 6 && visited[row][col + 2] && (visited[row - 1][col + 1] || visited[row + 1][col + 1])
+                    && !visited[row][col + 1]) {
                 int newrow = row;
                 int newcol = col + 1;
                 permute(number + 1, newrow, newcol);
@@ -146,10 +154,10 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
                 for (int i = 0; i < 4; i++) {
                     int newrow = row + moves[0][i];
                     int newcol = col + moves[1][i];
-                    
+
                     if (visited[newrow][newcol])
                         continue;
-                    
+
                     permute(number + 1, newrow, newcol);
                 }
             }
