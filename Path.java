@@ -1,5 +1,3 @@
-package test;
-
 public class Path {
     static int count = 0;
 
@@ -7,7 +5,7 @@ public class Path {
     boolean[][] visited;
     int[][] moves = {{-1, 0, 1, 0}, {0, 1, 0, -1}};
     int[] path;
-    String s = "*****DR******R******R********************R*D************L******";
+    String s = "***************************************************************";
 
     public Path(int size) {
         this.size = size;
