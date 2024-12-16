@@ -41,14 +41,33 @@ public class Path {
         while (!isValid) {
             System.out.print("Enter your input: ");
             userInput = scanner.nextLine();
-            
-            if (userInput.length() != 63) {
-                System.out.println("Error: Input must be exactly 63 characters.");
-            } else if (!userInput.matches("[*RLUD]*")) {
-                System.out.println("Error: Input contains invalid characters. Only *, R, L, U, D are allowed.");
+
+            boolean lengthValid = userInput.length() == 63;
+            boolean charValid = userInput.matches("[*RLUD]*");
+
+            // Combined error handling
+            if (!lengthValid || !charValid) {
+                System.out.println("Error:");
+
+                // Check for length issues
+                if (!lengthValid) {
+                    System.out.println("  - Input must be exactly 63 characters. Your input length is " + userInput.length() + ".");
+                }
+
+                // Check for invalid characters
+                if (!charValid) {
+                    System.out.println("  - Input contains invalid characters:");
+                    for (int i = 0; i < userInput.length(); i++) {
+                        char c = userInput.charAt(i);
+                        if ("*RLUD".indexOf(c) == -1) {
+                            System.out.println("    * Invalid character found: '" + c + "' at position " + (i + 1) + ".");
+                        }
+                    }
+                }
             } else {
                 path.s = userInput; // Update the path string after validation
                 isValid = true;
+                System.out.println("Input accepted.");
             }
         }
 
