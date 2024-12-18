@@ -1,7 +1,9 @@
+package test;
+
 public class AlgorithmTest {
     // 경로 개수를 추적하는 정적 변수
     static int count = 0;
-
+    static long count2 = 0;
     int size; // 격자 크기
     boolean[][] visited; // 방문 상태를 추적
     int[][] moves = {{-1, 0, 1, 0}, {0, 1, 0, -1}}; // 상하좌우 이동
@@ -27,6 +29,8 @@ public class AlgorithmTest {
         // 백트래킹 알고리즘으로 경로 탐색 시작
         permute(0, 1, 1);
         System.out.println("Paths found: " + count); // 경로 개수 출력
+        System.out.println("Number of recursive calls: "+ count2);
+        count2=0;
     }
 
     // 메인 메서드: 다양한 격자 크기 테스트
@@ -51,6 +55,7 @@ public class AlgorithmTest {
     // 백트래킹으로 모든 경로를 탐색
     public void permute(int number, int row, int col) {
         // 최적화 조건: 이동 불가능한 경우 조기 종료
+        count2++;
         if (visited[row][col - 1] && visited[row][col + 1] && !visited[row - 1][col] && !visited[row + 1][col]) {
             return;
         }

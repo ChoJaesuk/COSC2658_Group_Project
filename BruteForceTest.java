@@ -1,7 +1,8 @@
+package test;
 public class BruteForceTest {
     // 경로 개수를 추적하는 정적 변수
     static int count = 0;
-
+    static long count2 = 0;
     int size; // 격자 크기
     boolean[][] visited; // 방문 상태를 추적
     int[][] moves = {{-1, 0, 1, 0}, {0, 1, 0, -1}}; // 상하좌우 이동
@@ -25,6 +26,7 @@ public class BruteForceTest {
         // 브루트포스로 모든 경로 탐색 시작
         generatePaths(1, 1, 0);
         System.out.println("Paths found: " + count); // 경로 개수 출력
+        System.out.println("Number of recursive calls: "+ count2);
     }
 
     // 메인 메서드: 다양한 격자 크기 테스트
@@ -33,6 +35,7 @@ public class BruteForceTest {
         int[] sizes = {4, 5, 6, 7}; // 8x8은 제외하고 7x7까지만 실행
 
         for (int currentSize : sizes) {
+            count2=0;
             System.out.println("\nRunning for size: " + currentSize + "x" + currentSize);
             BruteForceTest test = new BruteForceTest(currentSize); // BruteForceTest 객체 생성
             count = 0; // count 초기화
@@ -48,6 +51,7 @@ public class BruteForceTest {
     // 브루트포스 방식으로 모든 경로를 생성
     public void generatePaths(int row, int col, int steps) {
         // 이미 격자의 모든 셀을 방문했고 끝점에 도달한 경우
+        count2++;
         if (steps == size * size - 1 && row == size && col == 1) {
             count++;
             return;
