@@ -1,3 +1,5 @@
+//Algorithm.java: Implements the main algorithm for pathfinding on an 8x8 grid. It accepts user-defined constraints (`*`, `R`, `L`, `U`, `D`) and validates input before calculating valid paths.
+
 import java.util.Scanner;
 
 public class Algorithm { // 클래스 이름 변경: Path → Algorithm

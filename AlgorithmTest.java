@@ -1,4 +1,4 @@
-package test;
+//AlgorithmTest.java: Runs tests on smaller grids (4x4 to 7x7) with all constraints fixed to `*`. This file is designed to compare performance against brute-force results.
 
 public class AlgorithmTest {
     // 경로 개수를 추적하는 정적 변수

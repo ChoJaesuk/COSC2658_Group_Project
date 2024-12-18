@@ -1,4 +1,5 @@
-package test;
+//BruteForceTest.java: Uses a brute-force approach to calculate paths for 4x4 to 7x7 grids. It serves as a baseline for comparison with `AlgorithmTest.java`.
+
 public class BruteForceTest {
     // 경로 개수를 추적하는 정적 변수
     static int count = 0;
