@@ -12,4 +12,5 @@ COSC2658_DSA_GROUP25
 3. Nguyen Ha Minh Duy - s3852307 : 3
 4. Nguyen Dinh Quoc Bao - s3938309 : 3
 
-Link demo: https://www.youtube.com/watch?v=gshUxQdEK4s
+Demo Link: https://www.youtube.com/watch?v=gshUxQdEK4s
+GitHub Link: https://github.com/ChoJaesuk/COSC2658_Group_Project
