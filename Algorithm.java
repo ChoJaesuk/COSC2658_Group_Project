@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-public class Algorithm { // 클래스 이름 변경: Path → Algorithm
+public class Algorithm {
     static int count = 0;
 
     int size = 8;
@@ -14,25 +14,29 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
     String s = "***************************************************************";
 
     public void start() {
-        System.out.println("Calculating..."); // Added to indicate the computation has started
+        System.out.println("Calculating...");
+
+        // Initialize the borders of the grid as visited
         for (int i = 0; i < size + 2; i++) {
             visited[0][i] = true;
             visited[size + 1][i] = true;
             visited[i][0] = true;
             visited[i][size + 1] = true;
         }
+
+        // Start the pathfinding algorithm
         permute(0, 1, 1);
-        System.out.println("Calculation complete"); // Added to indicate the computation has finished
+        System.out.println("Calculation complete");
     }
 
     public static void main(String[] args) {
-        Algorithm path = new Algorithm(); // 객체 이름 변경: Path → Algorithm
+        Algorithm path = new Algorithm();
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
         boolean isValid = false;
 
-        // Placeholder string to guide the user
+        // Provide instructions for valid input
         System.out.println("Please provide a string of exactly 63 characters.");
         System.out.println("The string should contain directions using the characters:");
         System.out.println("  - 'R' for Right, 'L' for Left, 'U' for Up, 'D' for Down.");
@@ -41,7 +45,7 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
         System.out.println(path.s);
         System.out.println("Ensure your input follows this format exactly.");
 
-        // Input validation loop
+        // Validate user input
         while (!isValid) {
             System.out.print("Enter your input: ");
             userInput = scanner.nextLine();
@@ -49,29 +53,25 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
             boolean lengthValid = userInput.length() == 63;
             boolean charValid = userInput.matches("[*RLUD]*");
 
-            // Combined error handling
             if (!lengthValid || !charValid) {
                 System.out.println("Error:");
 
-                // Check for length issues
                 if (!lengthValid) {
                     System.out.println("  - Input must be exactly 63 characters. Your input length is "
                             + userInput.length() + ".");
                 }
 
-                // Check for invalid characters
                 if (!charValid) {
                     System.out.println("  - Input contains invalid characters:");
                     for (int i = 0; i < userInput.length(); i++) {
                         char c = userInput.charAt(i);
                         if ("*RLUD".indexOf(c) == -1) {
-                            System.out
-                                    .println("    * Invalid character found: '" + c + "' at position " + (i + 1) + ".");
+                            System.out.println("    * Invalid character found: '" + c + "' at position " + (i + 1) + ".");
                         }
                     }
                 }
             } else {
-                path.s = userInput; // Update the path string after validation
+                path.s = userInput;
                 isValid = true;
                 System.out.println("Input accepted.");
             }
@@ -80,11 +80,12 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
         long startTime = System.currentTimeMillis();
         path.start();
         long endTime = System.currentTimeMillis();
-        System.out.println("Number of paths: " + count); // Enhanced to provide better feedback
-        System.out.println("Time (ms): " + (endTime - startTime)); // Enhanced for better clarity
+        System.out.println("Number of paths: " + count);
+        System.out.println("Time (ms): " + (endTime - startTime));
     }
 
     public void permute(int number, int row, int col) {
+        // Terminate early if the current cell causes a deadlock
         if (visited[row][col - 1] && visited[row][col + 1] && !visited[row - 1][col] && !visited[row + 1][col]) {
             return;
         }
@@ -93,17 +94,21 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
             return;
         }
 
+        // Check if the endpoint is reached
         if (row == size && col == 1) {
-            if (number == size * size - 1) // 63
+            if (number == size * size - 1) {
                 count++;
+            }
             return;
         }
 
-        if (number == size * size - 1)
+        if (number == size * size - 1) {
             return;
+        }
 
         visited[row][col] = true;
 
+        // Handle movement based on user input
         if (s.charAt(number) != '*') {
             if (s.charAt(number) == 'R') {
                 int newrow = row;
@@ -138,6 +143,7 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
                 }
             }
         } else {
+            // Explore unrestricted movement in all directions
             if ((col > 2) && visited[row][col - 2] && (visited[row - 1][col - 1] || visited[row + 1][col - 1])
                     && !visited[row][col - 1]) {
                 int newrow = row;
@@ -157,8 +163,9 @@ public class Algorithm { // 클래스 이름 변경: Path → Algorithm
                     int newrow = row + moves[0][i];
                     int newcol = col + moves[1][i];
 
-                    if (visited[newrow][newcol])
+                    if (visited[newrow][newcol]) {
                         continue;
+                    }
 
                     permute(number + 1, newrow, newcol);
                 }
