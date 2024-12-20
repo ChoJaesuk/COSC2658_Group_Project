@@ -1,5 +1,3 @@
-COSC2658_DSA_GROUP25
-
 ## File Descriptions
 1. **Algorithm.java**: Implements the main algorithm for pathfinding on an 8x8 grid. It accepts user-defined constraints (`*`, `R`, `L`, `U`, `D`) and validates input before calculating valid paths.
 
